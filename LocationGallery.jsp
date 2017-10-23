@@ -87,7 +87,7 @@
                 <table>
                     <td><h1>Gallery Details</h1></tr>
               <tr><td>Location Name</td><td>
-                    <select name="txtlocationname" id="sel">
+                    <select name="txtlocationname" id="sel" required="">
                     <option value="select">Select</option>
                                 <%
                                     String sel="select * from tbl_location";
@@ -100,8 +100,8 @@
                                  <%}%>
                                             
                               </select></td></tr>
-              <tr><td>Caption</td><td> <input type="text" name="txtcaptionname" id="caption" value="<%=locationcaption%>"></td></tr>
-              <tr><td>Filename</td><td> <input type="text" name="txtfilename" id="vehiclenumber" value="<%=locationfilename%>"></td></tr>
+              <tr><td>Caption</td><td> <input type="text" name="txtcaptionname" id="caption" value="<%=locationcaption%>"required=""></td></tr>
+              <tr><td>Filename</td><td> <input type="text" name="txtfilename" id="vehiclenumber" value="<%=locationfilename%>"required=""></td></tr>
                        <tr><td><input type="submit" name="save" value="Save"></td>
                         <td><input type="reset" name="Cancel" value="Cancel">
  
