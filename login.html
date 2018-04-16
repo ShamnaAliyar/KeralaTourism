@@ -1,0 +1,68 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button end menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title><img src="assets/images/logo.png" /></ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+    <ion-grid no-padding>
+        <ion-row>
+            <div class="profile_pics"><img src="assets/images/prof-pic.png" class="prof_pic"></div>
+            <div class="profile_fields">
+                <form class="list" [formGroup]="loginForm">
+                    <input type="text" [(ngModel)]="reg.username" formControlName="username" class="prof_input" placeholder="Username">
+                    <input type="password"  [(ngModel)]="reg.password" formControlName="password" class="prof_input" placeholder="Password">
+                    <button class="sign_in_btn" (click)="user_login()"> Sign In</button>
+                </form>
+            </div>
+        </ion-row>
+        <ion-row class="forgot_signin">
+            <span class="forgot_pwd">Forgot password ?</span>
+            <span class="line_strgt"></span>
+            <span class="forgot_pwd">Not a member yet ?</span>
+            <button class="sign_in_btn" [navPush]="SignupPage"> Sign Up</button>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<!--<ion-footer>arersdrsdrds</ion-footer>-->
+<ion-footer>
+    <ion-toolbar>
+        <ion-list style="margin: 0;">
+            <ion-grid no-padding>
+                <ion-row>
+                    <ion-col col>
+                        <button [navPush]="DeliveryPage" class="footer-menu" ion-item>
+                            <img src="assets/images/location.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button [navPush]="CartPage" class="footer-menu" ion-item>
+                            <img src="assets/images/cart.png" />
+                        </button>
+                                                <ion-badge class="count_cart_foot" *ngIf="this.cartItemsCount">{{this.cartItemsCount}}</ion-badge>
+
+                        
+                    </ion-col>
+                    <ion-col col>
+                        <button (click)="openhomepage()" class="footer-menu" ion-item>
+                            <img src="assets/images/home.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button [navPush]="DeliveryPage" class="footer-menu" ion-item>
+                            <img src="assets/images/track.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button (click)="shareapp()" class="footer-menu" ion-item>
+                            <img src="assets/images/more.png" />
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-list>
+    </ion-toolbar>
+</ion-footer>

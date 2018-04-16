@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <span class="price_head">Adon Price <small>SAR</small> {{adonstotal}}/-</span>
+        <ion-title>
+            Adons
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let p of adons; let i = index">
+            <ion-grid no-padding>
+                <ion-row>
+                    <ion-col col-2 class="img_wrap">
+                        <img class="adon_img" title="{{p.title.rendered}}" src="{{p.featured_image_urls.product_large}}" />
+                    </ion-col>
+                    <ion-col col-7 class="adon_details">
+                        <h3>{{p.title.rendered}}</h3>
+                        <h4 class="adon_price">SR {{p.acf.price}}/-</h4>
+                        <span class="adon_info">Add this Ketchup for {{p.title.rendered}} {{p.acf.price}}/-</span>
+                    </ion-col>
+                    <ion-col col-3>
+                        <ul class="add_cart_amount">
+                            <li><button (click)="decrement(i)" class="decrement"><img src="assets/images/decrese.png"/></button></li>
+                            <li class="countspc" ><span>{{p.qty}}</span></li>
+                            <li><button (click)="increment(i)" class="increment"><img src="assets/images/increse.png"/></button></li>
+                        </ul>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button class="bottom_addon" ion-button (click)="dismiss()">
+                    <span ion-text color="primary">Cancel</span>
+            </button>
+            <button class="bottom_addon" ion-button (click)="addAdons()">
+                    <span ion-text color="primary">OK</span>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
