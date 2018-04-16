@@ -1,0 +1,186 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button end menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title><img src="assets/images/logo.png" /></ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content no-padding>
+    <ion-grid no-padding>
+        <ion-row>
+            <div class="outer_sec_del">
+                <span class="strp_top">
+                </span>
+                <div class="tab_top_delivery">
+                    <button class="shopping_del"> <img  src="assets/images/shop.png"/></button>
+                    <button class="location_del"><img  src="assets/images/loc_del.png"/></button>
+                    <button class="cart_del"><img  src="assets/images/cart_del.png"/></button>
+                </div> 
+            </div>
+        </ion-row> 
+        <!--<ion-row>-->
+        <div class="tab_del_sec">                  
+            <ion-segment [(ngModel)]="user.deliveryop" (ionChange)="onSegmentChanged(user.deliveryop,sub_delivery,sub_pickup)">
+                <ion-segment-button value="delivery">
+                    Delivery
+                </ion-segment-button>
+                <ion-segment-button value="pickup">
+                    Pickup
+                </ion-segment-button>
+            </ion-segment>
+        </div>  
+        <div [ngSwitch]="user.deliveryop">
+            <div *ngSwitchCase="'delivery'">
+                <div [ngSwitch]="sub_delivery">
+                    <div *ngSwitchCase="'map'">
+                        <div id="map_main" [ngInit]="loadMap">
+                            <!--<img class="img_reponsive" src="assets/images/map.png"/>-->
+                        </div>
+                        <div class="delivery_fields">
+                            <input type="hidden" value="deliver" class="del_input" [(ngModel)]="user.action" >
+                            <input type="text" class="del_input" [(ngModel)]="user.name" placeholder="Name">
+                            <input type="tel" class="del_input" [(ngModel)]="user.contact" placeholder="Contact Number">
+                            <input type="text" class="del_input" [(ngModel)]="user.address1" placeholder="Address">
+                            <input type="text" class="del_input" [(ngModel)]="user.address2" placeholder="Address 2">
+
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'list_address'">
+                        <!--<ion-item>-->
+                        <div class="delivery_fields">
+                            <h3 class="address_head">Delivery Address</h3>
+                            <span class="address_sub">Enter Your Address where you want to deliver</span>
+                            <input type="hidden" value="deliver" class="del_input" [(ngModel)]="user.action" >
+                            <input type="text" class="del_input" [(ngModel)]="user.name" placeholder="Name">
+                            <input type="tel" class="del_input" [(ngModel)]="user.contact" placeholder="Contact Number">
+                            <input type="text" class="del_input" [(ngModel)]="user.city" placeholder="City">
+                            <input type="text" class="del_input" [(ngModel)]="user.address1" placeholder="Address">
+                            <input type="text" class="del_input" [(ngModel)]="user.address2" placeholder="Address 2">
+                            <!--                            <ion-list>
+                                                            <ion-item class="city_address">
+                                                                <ion-label class="city_labl">City</ion-label>
+                                                                <input type="text" class="del_input" placeholder="Name">
+                                                            </ion-item>
+                                                        </ion-list>-->
+                        </div>
+                        <!--</ion-item>-->
+                    </div>
+                </div> 
+                <div padding class="del_inner_seg">
+                    <ion-segment [(ngModel)]="sub_delivery" (ionChange)="onSegmentChanged(user.deliveryop,sub_delivery,sub_pickup)">
+                        <ion-segment-button value="map" class="inner_seg_btn">
+                            Map
+                        </ion-segment-button>
+                        <ion-segment-button value="list_address" class="inner_seg_btn">
+                            List
+                        </ion-segment-button>
+                        <button class="inner_seg_btn_proceed segment-md segment-button" (click)="checkout()">
+                            Proceed
+                        </button>
+                    </ion-segment>
+                </div>
+            </div> 
+            <div *ngSwitchCase="'pickup'">
+                <div [ngSwitch]="sub_pickup"> 
+                    <div *ngSwitchCase="'map'">
+                        <div id="map_pickup" [ngInitNew]="loadMapPickup">
+                            <!--<img class="img_reponsive" src="assets/images/map.png"/>-->
+                        </div>
+                        <div class="delivery_fields">
+                            <input type="hidden" value="pickup" class="del_input" [(ngModel)]="user.action" >
+                            <input type="text" class="del_input" [(ngModel)]="user.name"  placeholder="Name">
+                            <input type="text" class="del_input" [(ngModel)]="user.contact"  placeholder="Contact Number">
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'list_address'">
+                        <!--<ion-item>-->
+                        <div class="delivery_fields">
+                            <h3 class="address_head">Select outlet</h3>
+                            <span class="address_sub">Enter your nearest outlet where you want to pick up</span>
+                            <input type="hidden" value="pickup" class="del_input" [(ngModel)]="user.action" />
+                            <ion-item class="city_address">
+                                <ion-label class="city_labl">City</ion-label>
+                                <ion-select [(ngModel)]="user.selected_city" class="city_selct" (ionChange)=citySelected()>
+                                    <ion-option value="{{p.id}}" *ngFor="let p of cities">{{p.name}}</ion-option>
+                                </ion-select>
+                            </ion-item> <ion-item class="city_address">
+                                <ion-label class="city_labl">Area/Branch</ion-label>
+                                <ion-select [(ngModel)]="user.Selected_branch" class="city_selct">
+                                    <ion-option value="{{p.id}}" *ngFor="let p of filterdstores">{{p.title.rendered}}</ion-option>
+                                </ion-select>
+                            </ion-item>
+                            <input type="text" class="del_input" [(ngModel)]="user.name" placeholder="Name">
+                            <input type="text" class="del_input" [(ngModel)]="user.contact" placeholder="Contact Number">
+                            <!--                            <ion-list>
+                                                            <ion-item class="city_address">
+                                                                <ion-label class="city_labl">City</ion-label>
+                                                                <ion-select [(ngModel)]="gaming2" class="city_selct">
+                                                                    <ion-option value="nes">Kochi</ion-option>
+                                                                    <ion-option value="n64">Kottayam</ion-option>
+                                                                    <ion-option value="ps">TVM</ion-option>
+                                                                    <ion-option value="genesis">Kozhikode</ion-option>
+                                                                    <ion-option value="saturn">Malappuram</ion-option>
+                                                                    <ion-option value="snes">Pala</ion-option>
+                                                                </ion-select>
+                                                            </ion-item>
+                                                        </ion-list>-->
+                        </div>
+                        <!--</ion-item>-->
+                    </div>
+                </div> 
+                <div padding class="del_inner_seg">
+                    <ion-segment [(ngModel)]="sub_pickup" (ionChange)="onSegmentChanged(user.deliveryop,sub_delivery,sub_pickup)">
+                        <ion-segment-button value="map" class="inner_seg_btn">
+                            Map
+                        </ion-segment-button>
+                        <ion-segment-button value="list_address" class="inner_seg_btn">
+                            List
+                        </ion-segment-button>
+                        <button class="inner_seg_btn_proceed segment-md segment-button" (click)="checkout()">
+                            Proceed
+                        </button>
+                    </ion-segment>
+                </div>
+            </div>
+        </div>
+    </ion-grid>
+</ion-content>
+<!--<ion-footer>arersdrsdrds</ion-footer>-->
+<ion-footer>
+    <ion-toolbar>
+        <ion-list style="margin: 0;">
+            <ion-grid no-padding>
+                <ion-row>
+                    <ion-col col>
+                        <button [navPush]="LocationsPage" class="footer-menu" ion-item>
+                            <img src="assets/images/location.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button [navPush]="CartPage" class="footer-menu" ion-item>
+                            <img src="assets/images/cart.png" />
+                        </button> 
+                        <ion-badge class="count_cart_foot" *ngIf="this.cartItemsCount">{{this.cartItemsCount}}</ion-badge>
+
+                    </ion-col>
+                    <ion-col col>
+                        <button (click)="openhomepage()" class="footer-menu" ion-item>
+                            <img src="assets/images/home.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button [navPush]="DeliveryPage" class="footer-menu" ion-item>
+                            <img src="assets/images/track.png" />
+                        </button>
+                    </ion-col>
+                    <ion-col col>
+                        <button (click)="shareapp()" class="footer-menu" ion-item>
+                            <img src="assets/images/more.png" />
+                        </button>
+                    </ion-col>
+                </ion-row> 
+            </ion-grid>
+        </ion-list>
+    </ion-toolbar>
+</ion-footer>
